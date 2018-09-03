@@ -15,7 +15,7 @@ class FloatingTypeTest {
 
         // TODO: Please change the result to pass the test.
         // <!--start
-        final int expected = Integer.MAX_VALUE;
+        final int expected = 2;
         // --end-->
 
         assertEquals(expected, integer);
@@ -24,14 +24,17 @@ class FloatingTypeTest {
     @SuppressWarnings({"divzero", "NumericOverflow"})
     @Test
     void should_judge_special_double_cases() {
+        double r = 1d / 0d;
         assertTrue(isInfinity(1d / 0d));
         assertTrue(isInfinity(-1d / 0d));
         assertFalse(isInfinity(2d));
-        assertFalse(isInfinity(Double.NaN));
+        assertFalse(isInfinity(Double.NaN)); //0.0d / 0.0
 
-        assertTrue(isNan(0d / 0d));
+
         assertFalse(isNan(Double.NEGATIVE_INFINITY));
         assertFalse(isNan(Double.POSITIVE_INFINITY));
+        assertTrue(isNan(0d / 0d));
+
     }
 
     @Test
@@ -41,7 +44,7 @@ class FloatingTypeTest {
 
         // TODO: Please change the result to pass the test.
         // <!--start
-        final int expected = Integer.MAX_VALUE;
+        final int expected = 2;
         // --end-->
 
         assertEquals(expected, integer);
@@ -54,7 +57,7 @@ class FloatingTypeTest {
 
         // TODO: Please call some method to round the floating point number.
         // <!--start
-        final long rounded = Long.MAX_VALUE;
+        final long rounded = Math.round(floatingPointNumber);
         // --end-->
 
         assertEquals(3L, rounded);
@@ -63,13 +66,17 @@ class FloatingTypeTest {
     @SuppressWarnings("unused")
     private boolean isNan(double realNumber) {
         // TODO: please implement the method to pass the test.
-        throw new NotImplementedException();
+        if (realNumber == Double.NaN) return true;
+        return false;
+        //throw new NotImplementedException();
     }
 
     @SuppressWarnings("unused")
     private boolean isInfinity(double realNumber) {
         // TODO: please implement the method to pass the test.
-        throw new NotImplementedException();
+        if (realNumber == 1.0 / 0.0 || realNumber == -1.0 / 0.0) return true;
+        else return false;
+        //throw new NotImplementedException();
     }
 
     /*

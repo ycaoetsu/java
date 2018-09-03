@@ -13,7 +13,7 @@ class ArrayTest {
 
         MyStack myStack = new MyStack(initialCapacity);
         for (int i = 0; i < itemsCount; ++i) {
-            myStack.push(i);
+            myStack.push(i);//from 0 to 24
         }
 
         int[] array = myStack.popToArray();
