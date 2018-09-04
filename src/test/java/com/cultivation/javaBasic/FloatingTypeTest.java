@@ -8,10 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FloatingTypeTest {
+
+
     @Test
     void should_not_get_rounded_result_if_convert_floating_number_to_integer() {
         final float floatingPointNumber = 2.75f;
         final int integer = (int)floatingPointNumber;
+        //long lon = 3L;
+        //double dou = lon;8
+        ////long longNum = dou;
+        //short s = 1;
+        //byte b = s;
 
         // TODO: Please change the result to pass the test.
         // <!--start
@@ -21,16 +28,21 @@ class FloatingTypeTest {
         assertEquals(expected, integer);
     }
 
+
+
     @SuppressWarnings({"divzero", "NumericOverflow"})
     @Test
     void should_judge_special_double_cases() {
         double r = 1d / 0d;
+        //String s = "string";
+        //Float
         assertTrue(isInfinity(1d / 0d));
         assertTrue(isInfinity(-1d / 0d));
         assertFalse(isInfinity(2d));
         assertFalse(isInfinity(Double.NaN)); //0.0d / 0.0
 
 
+        //assertFalse(isNan(s));
         assertFalse(isNan(Double.NEGATIVE_INFINITY));
         assertFalse(isNan(Double.POSITIVE_INFINITY));
         assertTrue(isNan(0d / 0d));
@@ -66,16 +78,17 @@ class FloatingTypeTest {
     @SuppressWarnings("unused")
     private boolean isNan(double realNumber) {
         // TODO: please implement the method to pass the test.
-        if (realNumber != realNumber) return true;
+        return Double.isNaN(realNumber);
+        /*if (realNumber != realNumber) return true;
         return false;
-        //throw new NotImplementedException();
+        //throw new NotImplementedException(); */
     }
 
     @SuppressWarnings("unused")
     private boolean isInfinity(double realNumber) {
         // TODO: please implement the method to pass the test.
-        if (realNumber == 1.0 / 0.0 || realNumber == -1.0 / 0.0) return true;
-        else return false;
+        //if (isNan(realNumber)) return false;
+        return Double.isInfinite(realNumber);
         //throw new NotImplementedException();
     }
 

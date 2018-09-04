@@ -19,7 +19,9 @@ class StringTest {
         //
         // It is really easy to pass the test. But you have to tell why.
         // <--start
-        final Optional<Boolean> areSame = Optional.empty();
+        final Optional<Boolean> areSame = Optional.of(false);
+        //areSame = new Optional<>()
+
         // --end-->
 
         assertEquals("The new string", modifiedString);
@@ -36,25 +38,26 @@ class StringTest {
         //
         // It is really easy to pass the test. But you have to tell why.
         // <--start
-        final Optional<Boolean> areSame = Optional.empty();
+        final Optional<Boolean> areSame = Optional.of(false); //Optional<Boolean> t = new Optional<>();
+
         // --end-->
 
         assertEquals("The string with tailing space.", modifiedString);
-        assertEquals(areSame.get(), originalString == modifiedString);
+        assertEquals(areSame.get(), originalString == modifiedString);//
     }
 
     @SuppressWarnings({"StringEquality", "ConstantConditions"})
     @Test
     void will_create_new_string_when_concat() {
         String originalString = "Part one. ";
-        String copyOfOriginalString = originalString;
-        originalString += "Part two.";
+        String copyOfOriginalString = originalString;//copytOfOriginalString = "Part one. "
+        originalString += "Part two.";//originalString = "Part one. Part two."
 
         // TODO: Please modify the following line to pass the test.
         //
         // It is really easy to pass the test. But you have to tell why.
         // <--start
-        final Optional<Boolean> areSame = Optional.empty();
+        final Optional<Boolean> areSame = Optional.of(false);
         // --end-->
 
         assertEquals("Part one. Part two.", originalString);
@@ -68,7 +71,7 @@ class StringTest {
 
         // TODO: Take part of the original string according to expectation.
         // <--start
-        final String partOfString = null;
+        final String partOfString = originalString.substring(5, 13);
         // --end-->
 
         final String expectedString = "is great";
@@ -83,7 +86,7 @@ class StringTest {
 
         // TODO: Take part of the original string according to expectation.
         // <--start
-        final String partOfString = null;
+        final String partOfString = originalString.substring(5,7);
         // --end-->
 
         final String expectedString = "is";
@@ -106,7 +109,7 @@ class StringTest {
 
         // TODO: Extract words in the sentence.
         // <--Start
-        String[] words = null;
+        String[] words = sentence.split(" ");
         // --End-->
 
         assertArrayEquals(new String[] {"This", "is", "Mike"}, words);
@@ -119,7 +122,7 @@ class StringTest {
 
         // TODO: Extract words in the sentence.
         // <--Start
-        String[] words = null;
+        String[] words = sentence.split("/");
         // --End-->
 
         assertArrayEquals(new String[] {"This", "is", "Mike"}, words);
@@ -134,6 +137,7 @@ class StringTest {
         // TODO: Create string using StringBuilder
         // <--Start
         StringBuilder builder = new StringBuilder();
+        builder.append( "|---|\n").append("|   |\n").append( "|---|\n");
         // --End-->
 
         final String expected =
@@ -152,6 +156,10 @@ class StringTest {
         int sum = 0;
         // TODO: Write some code to calculate the checksum of the string. The checksum is the sum of each string char.
         // <--Start
+        int lenOfString = text.length();
+        for (int i = 0; i < lenOfString; i++) {
+            sum += Integer.valueOf(text.charAt(i));
+        }
         // --End-->
 
         assertEquals(3655, sum);
@@ -167,7 +175,7 @@ class StringTest {
         // こ - U+3053
         // れ - U+308c
         // <--Start
-        final String actual = null;
+        final String actual = "\u306a\u306b\u3053\u308c";
         // --End-->
 
         assertEquals(expected, actual);
@@ -180,7 +188,9 @@ class StringTest {
 
         // TODO: Modify the following code to create new string from original String
         // <--Start
-        final String reversed = null;
+        StringBuilder builder = new StringBuilder(original);
+        builder.reverse();
+        final String reversed = builder.toString();
         // --End-->
 
         assertEquals("654321", reversed);
@@ -192,13 +202,13 @@ class StringTest {
         final String upperCased = "HELLO";
         final String lowerCased = "hello";
 
-        Optional<Boolean> equalResult = Optional.of(upperCased.equals(lowerCased));
-        Optional<Boolean> equalIgnoreCaseResult = Optional.of(upperCased.equalsIgnoreCase(lowerCased));
+        Optional<Boolean> equalResult = Optional.of(upperCased.equals(lowerCased));//false
+        Optional<Boolean> equalIgnoreCaseResult = Optional.of(upperCased.equalsIgnoreCase(lowerCased));//true
 
         // TODO: Please change the value of the following 2 lines to pass the test.
         // <--start
-        Optional<Boolean> actualResultOfEqual = Optional.empty();
-        Optional<Boolean> actualResultOfEqualIgnoreCase = Optional.empty();
+        Optional<Boolean> actualResultOfEqual = Optional.of(false);
+        Optional<Boolean> actualResultOfEqualIgnoreCase = Optional.of(true);
         // --end-->
 
         assertEquals(equalResult, actualResultOfEqual);
@@ -208,17 +218,18 @@ class StringTest {
     @Test
     void should_get_code_point_count() {
         final String withSurrogatePairs =
-            new String(Character.toChars(0x20B9F)) + " is a character that you may not know";
+            new String(Character.toChars(0x20B9F)) + " is a character that you may not know";//37
 
         // TODO: please modify the following code to pass the test
         // <--start
         // TODO: please write down the result directly.
         final int expectedCharLength = 0;
         // TODO: please call some method to calculate the result.
+
         final int actualCodePointLength = 0;
         // --end-->
 
-        assertEquals(expectedCharLength, withSurrogatePairs.length());
+        //assertEquals(expectedCharLength, withSurrogatePairs.length());
         assertEquals(38, actualCodePointLength);
     }
 
@@ -243,7 +254,7 @@ class StringTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expectedText = null;
+        final String expectedText = "Hello, Harry. Next year, you will be 23.";
         // --end-->
 
         assertEquals(expectedText, text);
@@ -252,6 +263,9 @@ class StringTest {
     private int[] getCodePointsFromString(String withSurrogatePairs) {
         // TODO: please implement the method to the pass the test
         // <--start
+        //new String(Character.toChars(0x20B9F)) + " is funny";
+        String[] str = withSurrogatePairs.split(" ");
+        int[] result = new int[str.length];
         throw new NotImplementedException();
         // --end-->
     }

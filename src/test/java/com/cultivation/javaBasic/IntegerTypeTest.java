@@ -3,8 +3,7 @@ package com.cultivation.javaBasic;
 import org.junit.jupiter.api.Test;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class IntegerTypeTest {
 
@@ -100,7 +99,7 @@ class IntegerTypeTest {
     void should_throw_exception_when_overflow() {//https://stackoverflow.com/questions/3001836/how-does-java-handle-integer-underflows-and-overflows-and-how-would-you-check-fo
         int theNumberWillOverflow = Integer.MAX_VALUE;
 
-        assertThrows(ArithmeticException.class, () -> Math.addExact(theNumberWillOverflow, 1));
+        assertThrows(ArithmeticException.class, () -> add(theNumberWillOverflow, 1));
     }
 
     @Test
@@ -131,9 +130,18 @@ class IntegerTypeTest {
 
         // TODO: please modify the following lines to pass the test
         // <!--start
-        final short expected = 0x0000_4567;
+        final short expected = 0x4567;
         // --end-->
 
+        assertEquals(expected, smallerInteger);
+    }
+
+    @Test
+    void should_negative_number_when_casting() {
+        final int integer = 0x8000_0000;
+        final short smallerInteger = (short)integer;
+
+        final short expected = 0x0000;
         assertEquals(expected, smallerInteger);
     }
 
@@ -168,21 +176,33 @@ class IntegerTypeTest {
         assertEquals(expectedCurrentInteger, integer);
         assertEquals(expectedResult, result);
     }
+    @Test
+    void should_be_negative() {
+        int mask = 1;
+        //int num = 0;
+        for (int pos = 0; pos < 31; pos++) {
+            mask = mask << pos;
+            assertTrue(mask > 0);
+        }
+        mask = mask << 1;
+        assertTrue(mask < 0);
+    }
 
     private int add(int left, int right) {
         // TODO: Please implement the method. Adding two numbers.
         // The method should throw ArithmeticException if overflow or underflow happens.
-        long sum = (long)left + right;
+        return Math.addExact(left, right);
+        /*long sum = (long)left + right;
         if (sum < Integer.MIN_VALUE || sum > Integer.MAX_VALUE) {
             throw new NotImplementedException();
         }
-        return (int)sum;
+        return (int)sum; */
     }
 
     /*
      * The coach should ask the following questions to make the candidates be focused on the number representations:
      *
-     * - How many bytes needed to store a(n) int/long/short/byte.
+     * - How many bytes needed to store a(n) int/long/short/byte. int 4, 8, 2, 1
      * - How many bits are there in a(n) int/long/short/byte.
      * - Why integer number over/underflow is dangerous?
      * - What is `final` variable?
