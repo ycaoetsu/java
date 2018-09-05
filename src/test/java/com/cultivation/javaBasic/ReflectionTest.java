@@ -4,6 +4,10 @@ import com.cultivation.javaBasic.util.Employee;
 import com.cultivation.javaBasic.util.MethodWithAnnotation;
 import org.junit.jupiter.api.Test;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +32,7 @@ class ReflectionTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "com.cultivation.javaBasic.util.Employee";
         // --end-->
 
         assertEquals(expected, employeeClass.getName());
@@ -41,7 +45,7 @@ class ReflectionTest {
 
         // TODO: please created an instance described by `theClass`
         // <--start
-        Employee instance = null;
+        Employee instance = new Employee();
         // --end-->
 
         assertEquals("Employee", instance.getTitle());
@@ -54,7 +58,12 @@ class ReflectionTest {
 
         // TODO: please get all public static declared methods of Double. Sorted in an ascending order
         // <--start
-        String[] publicStaticMethods = null;
+        Method[] getReflectClassMethods = doubleClass.getDeclaredMethods();
+        String[] publicStaticMethods = new String[getReflectClassMethods.length];
+        for (int i = 0; i < publicStaticMethods.length; i++) {
+            publicStaticMethods[i] = getReflectClassMethods[i].toString();
+        }
+        Arrays.sort(publicStaticMethods);
         // --end-->
 
         final String[] expected = {
@@ -74,7 +83,8 @@ class ReflectionTest {
 
         // TODO: please get the value of `getTitle` method using reflection. No casting to Employee is allowed.
         // <--start
-        Object result = null;
+        //System.out.print(employee.getClass().toString());
+        Object result = employee.getClass().getDeclaredMethod("getTitle", new Class[]{}).invoke(employee);
         // --end-->
 
         assertEquals("Employee", result);
@@ -87,7 +97,7 @@ class ReflectionTest {
 
         // TODO: please get the class of array item `employees`
         // <--start
-        Class<?> itemClass = null;
+        Class<?> itemClass = employees.getClass();
         // --end-->
 
         assertEquals(Employee.class, itemClass);
@@ -100,7 +110,8 @@ class ReflectionTest {
 
         // TODO: please get the methods who contains MyAnnotation annotation.
         // <--start
-        String[] methodsContainsAnnotations = null;
+        Annotation[] annotations = theClass.getAnnotation("MyAnnotation");
+        String[] methodsContainsAnnotations = ;
         // --end-->
 
         assertArrayEquals(new String[] {"theMethod"}, methodsContainsAnnotations);
