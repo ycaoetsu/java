@@ -11,22 +11,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class InheritanceTest {
 
     @Test
-    void should_be_derived_from_object_class() {
+    void should_be_derived_from_object_class() {//?
         // TODO: please modify the following code to pass the test
         // <--start
-        final Class<?> expectedSuperClass = null;
+        final Class<?> expectedSuperClass = Object.class;//java.lang.Object;//如何证明返回的是class type
         // --end-->
-
+        System.out.print(SimpleEmptyClass.class.getSuperclass());
         assertEquals(expectedSuperClass, SimpleEmptyClass.class.getSuperclass());
+        //assertTrue(Object.class.getName().equals("class java.lang.Object"));
     }
 
     @Test
-    void should_call_super_class_constructor() {
+    void should_call_super_class_constructor() {//when call a child's constructor, first call its parent's constructor
         DerivedFromSuperClassWithDefaultConstructor instance = new DerivedFromSuperClassWithDefaultConstructor();
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {};
+        final String[] expected = {"SuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor()"};
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -40,7 +41,7 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {};
+        final String[] expected = {"SuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor(int)"};
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -54,7 +55,7 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {};
+        final String[] expected = {"SuperClassWithDefaultConstructor.constructor(String)", "DerivedFromSuperClassWithDefaultConstructor.constructor(String)"};
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -68,7 +69,7 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expectedName = null;
+        final String expectedName = "DerivedFromBaseClassForOverriding";
         // --end-->
 
         assertEquals(expectedName, instance.getName());
@@ -80,7 +81,7 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expectedName = null;
+        final String expectedName = "BaseClassForOverriding->DerivedFromBaseClassForOverridingCallingSuper";
         // --end-->
 
         assertEquals(expectedName, instance.getName());
@@ -98,11 +99,12 @@ class InheritanceTest {
             arrayWithBaseType[arrayWithBaseType.length - 1] = new SuperClassWithDefaultConstructor();
         } catch (Exception error) {
             willThrow = true;
-        }
+            System.out.print(error);//java.lang.ArrayStoreException: com.cultivation.javaBasic.util.SuperClassWithDefaultConstructor
+        }//https://docs.oracle.com/javase/7/docs/api/java/lang/ArrayStoreException.html (indicates assign wrong type)
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final Optional<Boolean> expected = Optional.empty();
+        final Optional<Boolean> expected = Optional.of(true);
         // --end-->
 
         assertEquals(expected.get(), willThrow);
@@ -110,25 +112,25 @@ class InheritanceTest {
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
-    void should_not_make_you_confused() {
+    void should_not_make_you_confused() {//sub-class convert to super class instance, when call method, return to results from sub-class
         NestedDerivedClassWithName nested = new NestedDerivedClassWithName();
         DerivedFromBaseClassWithName derived = nested;
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "NestedDerivedClassWithName";
         // --end-->
 
         assertEquals(expected, derived.getName());
     }
 
     @Test
-    void should_not_make_you_confused_2() {
+    void should_not_make_you_confused_2() {//subclass cast to super class, if subclass has the method, run subclass method, if not, go to the super class
         DerivedFromBaseClassWithName derived = new DerivedFromBaseClassWithName();
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "BaseClassWithName";
         // --end-->
 
         assertEquals(expected, derived.getName());
@@ -136,14 +138,14 @@ class InheritanceTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    void should_use_instance_of_to_determine_inheritance_relationship() {
-        NestedDerivedClassWithName nested = new NestedDerivedClassWithName();
+    void should_use_instance_of_to_determine_inheritance_relationship() {//subclass instance is an instance of all super classes
+        NestedDerivedClassWithName nested = new NestedDerivedClassWithName();//declares a subclass instance
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final Optional<Boolean> expectedResult1 = Optional.empty();
-        final Optional<Boolean> expectedResult2 = Optional.empty();
-        final Optional<Boolean> expectedResult3 = Optional.empty();
+        final Optional<Boolean> expectedResult1 = Optional.of(true);
+        final Optional<Boolean> expectedResult2 = Optional.of(true);
+        final Optional<Boolean> expectedResult3 = Optional.of(true);
         // --end-->
 
         assertEquals(expectedResult1.get(), nested instanceof NestedDerivedClassWithName);
@@ -153,13 +155,13 @@ class InheritanceTest {
 
     @SuppressWarnings({"ConstantConditions", "UnnecessaryBoxing"})
     @Test
-    void should_use_instance_of_only_in_inheritance_relationship() {
+    void should_use_instance_of_only_in_inheritance_relationship() {//Integer, Long -> Number
         final Object integer = new Integer(42);  // the magic of life
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final Optional<Boolean> expectedResult1 = Optional.empty();
-        final Optional<Boolean> expectedResult2 = Optional.empty();
+        final Optional<Boolean> expectedResult1 = Optional.of(true);
+        final Optional<Boolean> expectedResult2 = Optional.of(false);
         // --end-->
 
         assertEquals(expectedResult1.get(), integer instanceof Integer );

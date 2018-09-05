@@ -277,6 +277,7 @@ class StringTest {
     private int[] getCodePointsFromString(String withSurrogatePairs) {
         // TODO: please implement the method to the pass the test
         // <--start
+        //codePointAt charAt
         return withSurrogatePairs.codePoints().toArray();
         //new String(Character.toChars(0x20B9F)) + " is funny";
         /*List<Integer> list = new ArrayList<>();

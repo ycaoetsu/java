@@ -5,7 +5,7 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class SuperClassWithDefaultConstructor {
-    private final List<String> logs = new ArrayList<>();
+    private final List<String> logs = new ArrayList<>();//logs: {"DerivedFromSuperClassWithDefaultConstructor.constructor()"}
 
     void addLog(String log) { logs.add(log); }
 

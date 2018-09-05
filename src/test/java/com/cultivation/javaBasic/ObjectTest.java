@@ -127,7 +127,7 @@ class ObjectTest {
     void should_choose_the_most_specific_overload() {
         OverloadingFixture fixture = new OverloadingFixture();
         final String name = "name";
-        final int integer = 2;
+        final int integer = 2;//double 2d
 
         String actual = fixture.methodWithTwoParameters(name, integer);
 
@@ -160,9 +160,10 @@ class ObjectTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {"Field Initializer", "Initialization Block", "Constructor with argument", "Default constructor"};
+        //final String[] expected = {"Field Initializer", "Initialization Block", "Constructor with argument", "Default constructor"};
         // --end-->
-
+        final String[] expected = {"Field Initializer", "Initialization Block order1",  "Initialization Block", "Initialization Block 2", "Constructor with argument", "Default constructor"};
+        //assertArrayEquals(expected, logs);
         assertArrayEquals(expected, logs);
     }
 
