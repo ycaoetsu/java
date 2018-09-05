@@ -99,9 +99,9 @@ class StringTest {
     /*
      * Questions on take string apart.
      *
-     * - What if the input arguments is out of range of the string?
-     * - What will happen if the the starting index is greater than the ending index?
-     * - What will happen if the input string is of null reference?
+     * - What if the input arguments is out of range of the string?//StringOutOfBoundsException
+     * - What will happen if the the starting index is greater than the ending index?//StringOutOfBoundsException
+     * - What will happen if the input string is of null reference?//NullPointerException
      */
 
     @SuppressWarnings({"unused", "ConstantConditions"})
@@ -138,8 +138,20 @@ class StringTest {
 
         // TODO: Create string using StringBuilder
         // <--Start
-        StringBuilder builder = new StringBuilder();
-        builder.append( "|---|\n").append("|   |\n").append( "|---|\n");
+        StringBuilder builder = new StringBuilder();//(0,0), (0, 4), (2, 0), (4,4)
+        for (int i = 0; i < height; i++) {
+            builder.append("|");
+            for (int j = 1; j < width - 1; j++) {
+                if (i == 1) {
+                    builder.append(" ");
+                } else {
+                    builder.append("-");
+                }
+            }
+            builder.append("|");
+            builder.append("\n");
+        }
+        //builder.append( "|---|\n").append("|   |\n").append( "|---|\n");
         // --End-->
 
         final String expected =
@@ -265,8 +277,9 @@ class StringTest {
     private int[] getCodePointsFromString(String withSurrogatePairs) {
         // TODO: please implement the method to the pass the test
         // <--start
+        return withSurrogatePairs.codePoints().toArray();
         //new String(Character.toChars(0x20B9F)) + " is funny";
-        List<Integer> list = new ArrayList<>();
+        /*List<Integer> list = new ArrayList<>();
         for(int i = 0; i < withSurrogatePairs.length(); i++){
             list.add(Character.codePointAt(withSurrogatePairs, i));
         }
@@ -276,8 +289,27 @@ class StringTest {
         for (int j = 0; j < size; j++) {
             result[j] = list.get(j);
         }
-        return result;
+        return result;*/
         // --end-->
+    }
+
+    @Test
+    void check_final_array_can_be_changed(){
+        final char[] array = new char[]{'1', '2'};
+        array[0] = '3';
+        assertEquals('3', array[0]);
+
+    }
+
+    @Test
+    void check_final_array_can_be_changed2(){
+        final char[] array = new char[]{'1', '2', '3', '4'};
+        for (int i = 0; i < array.length / 2; i++) {
+            char temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
+        assertArrayEquals(new char[]{'4', '3', '2', '1'}, array);
     }
 
     /*
