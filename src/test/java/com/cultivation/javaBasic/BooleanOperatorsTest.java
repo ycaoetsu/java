@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BooleanOperatorsTest {
 
@@ -63,7 +64,7 @@ class BooleanOperatorsTest {
 
     @Test
     void should_do_bitwise_not_operation() {
-        final int value = 0x0000_ffff;//0000 0000 0000 0000 1111 1111 1111 1111
+        final int value = 0x0000_ffff;
 
         // TODO: please write down the result directly to pass the test.
         // <--start
@@ -71,5 +72,26 @@ class BooleanOperatorsTest {
         // --end-->
 
         assertEquals(expected, ~value);
+    }
+
+    @Test
+    void should_not_prior_and() {//& | ~
+        final int value = 0xffff;// ~value & 0xffff
+        final int test =  0xffff & ~value;
+        assertEquals(0x0000, test); // ~ > &
+    }
+    @Test
+    void should_not_prior_or() {
+        final int orVal = 0x0000_ffff;
+        int testNotPriorOr = ~orVal | 0x0000_ffff;
+        int expectedNotPriorOr = 0xffff_ffff;
+        int expectedOrPriorNot = 0xffff_0000;
+        assertEquals(expectedNotPriorOr, testNotPriorOr);//inline command option N
+        assertNotEquals(expectedOrPriorNot, testNotPriorOr);
+    }
+    @Test
+    void should_and_prior_or(){
+        final int val = 0xffff;
+        final int test = val | 0x0000 & 0xffff;
     }
 }

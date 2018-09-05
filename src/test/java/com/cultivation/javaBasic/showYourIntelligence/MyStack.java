@@ -26,7 +26,6 @@ public class MyStack {
 
         // TODO: Please push the value into the storage here.
         // <--start
-        //storage = new int[10];
         storage[count++] = value;
         //throw new NotImplementedException();
         // --end-->
@@ -63,9 +62,11 @@ public class MyStack {
     private int pop() {
         // TODO: Please pop one element from the array.
         // <--start
-        count--;
-        int popVal = storage[count];
-        return popVal;
+        //if (count > 0) {
+            count--;
+            int popVal = storage[count];
+            return popVal;
+
         // --end-->
 
         //throw new UnsupportedOperationException("Stack is empty.");

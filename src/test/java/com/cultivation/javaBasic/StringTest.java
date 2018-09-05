@@ -3,6 +3,8 @@ package com.cultivation.javaBasic;
 import org.junit.jupiter.api.Test;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -223,13 +225,13 @@ class StringTest {
         // TODO: please modify the following code to pass the test
         // <--start
         // TODO: please write down the result directly.
-        final int expectedCharLength = 0;
+        final int expectedCharLength = 39;
         // TODO: please call some method to calculate the result.
 
-        final int actualCodePointLength = 0;
+        final int actualCodePointLength = withSurrogatePairs.codePointCount(0, withSurrogatePairs.length());
         // --end-->
 
-        //assertEquals(expectedCharLength, withSurrogatePairs.length());
+        assertEquals(expectedCharLength, withSurrogatePairs.length());
         assertEquals(38, actualCodePointLength);
     }
 
@@ -264,9 +266,17 @@ class StringTest {
         // TODO: please implement the method to the pass the test
         // <--start
         //new String(Character.toChars(0x20B9F)) + " is funny";
-        String[] str = withSurrogatePairs.split(" ");
-        int[] result = new int[str.length];
-        throw new NotImplementedException();
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < withSurrogatePairs.length(); i++){
+            list.add(Character.codePointAt(withSurrogatePairs, i));
+        }
+        //throw new NotImplementedException();
+        int size = list.size();
+        int[] result = new int[size];
+        for (int j = 0; j < size; j++) {
+            result[j] = list.get(j);
+        }
+        return result;
         // --end-->
     }
 

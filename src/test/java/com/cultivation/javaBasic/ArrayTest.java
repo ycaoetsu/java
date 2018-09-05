@@ -23,4 +23,12 @@ class ArrayTest {
             array
         );
     }
+    @Test
+    void should_fix_size_array() {
+        int[] testArray = new int[2];//java cannot assign a value to final variable length
+        //testArray.length++;
+
+        int[] testAr = new int[]{10,1,2};
+        //testAr[3] = 6;
+    }
 }
