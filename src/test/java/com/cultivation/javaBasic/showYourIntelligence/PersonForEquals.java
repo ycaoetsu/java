@@ -37,9 +37,10 @@ public class PersonForEquals {
         // TODO: please modify the following code to pass the test
         // <--start
         if (this == obj) return true;
-        if (obj instanceof PersonForEquals) {
-            PersonForEquals anotherPerson = (PersonForEquals)obj;
-            if (anotherPerson.getName().equals(this.name) && anotherPerson.getYearOfBirth() == this.yearOfBirth) return true;
+        if (obj == null) return false;
+        if (obj.getClass() == this.getClass()) {
+            PersonForEquals person = (PersonForEquals) obj;
+            if (person.name.equals(this.name) && person.yearOfBirth == this.yearOfBirth) return true;
         }
         return false;
         //throw new NotImplementedException();

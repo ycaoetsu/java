@@ -8,13 +8,25 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class Parent {
+    static void method() {
+        System.out.print("1");
+    }
+}
+class Child extends Parent{
+    void method2() {
+        method();
+    }
+}
+
+
 class InheritanceTest {
 
     @Test
     void should_be_derived_from_object_class() {//?
         // TODO: please modify the following code to pass the test
         // <--start
-        final Class<?> expectedSuperClass = Object.class;//java.lang.Object;//如何证明返回的是class type
+        final Class<?> expectedSuperClass = Object.class;//java.lang.Object;
         // --end-->
         System.out.print(SimpleEmptyClass.class.getSuperclass());
         assertEquals(expectedSuperClass, SimpleEmptyClass.class.getSuperclass());
@@ -90,24 +102,18 @@ class InheritanceTest {
     @SuppressWarnings({"ConstantConditions", "RedundantCast", "UnnecessaryLocalVariable"})
     @Test
     void should_use_caution_when_dealing_with_array_type() {
-        DerivedFromSuperClassWithDefaultConstructor[] array = new DerivedFromSuperClassWithDefaultConstructor[4];
-        SuperClassWithDefaultConstructor[] arrayWithBaseType = (SuperClassWithDefaultConstructor[])array;
+        //derived[4] -> Parent[]
+        DerivedFromSuperClassWithDefaultConstructor derived[] = new DerivedFromSuperClassWithDefaultConstructor[4];
+        SuperClassWithDefaultConstructor parent[] = (DerivedFromSuperClassWithDefaultConstructor[])derived;
 
         boolean willThrow = false;
-
         try {
-            arrayWithBaseType[arrayWithBaseType.length - 1] = new SuperClassWithDefaultConstructor();
+            parent[3] = new SuperClassWithDefaultConstructor();
         } catch (Exception error) {
             willThrow = true;
-            System.out.print(error);//java.lang.ArrayStoreException: com.cultivation.javaBasic.util.SuperClassWithDefaultConstructor
-        }//https://docs.oracle.com/javase/7/docs/api/java/lang/ArrayStoreException.html (indicates assign wrong type)
+        }
+        assertEquals(false, willThrow);
 
-        // TODO: please modify the following code to pass the test
-        // <--start
-        final Optional<Boolean> expected = Optional.of(true);
-        // --end-->
-
-        assertEquals(expected.get(), willThrow);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
