@@ -50,7 +50,7 @@ class ReflectionTest {
 
         // TODO: please created an instance described by `theClass`
         // <--start
-        Employee instance = new Employee();
+        Employee instance = (Employee)theClass.newInstance(); //newInstance() -> Object type 强制转换
         // --end-->
 
         assertEquals("Employee", instance.getTitle());
@@ -63,22 +63,16 @@ class ReflectionTest {
 
         // TODO: please get all public static declared methods of Double. Sorted in an ascending order
         // <--start
-        Method[] getReflectClassMethods = doubleClass.getDeclaredMethods();
-        //String[] publicStaticMethods = new String[getReflectClassMethods.length];
+        Method[] methods = doubleClass.getDeclaredMethods();
         List<String> resultList = new ArrayList<>();
-        for (Method method : getReflectClassMethods) {
-            if (Modifier.isStatic(method.getModifiers()) && Modifier.isPublic(method.getModifiers())) {
+        for (Method method : methods) {
+            if (Modifier.isPublic(method.getModifiers()) && Modifier.isStatic(method.getModifiers())) {
                 resultList.add(method.getName());
             }
         }
-        /*for (int i = 0; i < publicStaticMethods.length; i++) {
-            if (getReflectClassMethods[i].getModifiers())
-            publicStaticMethods[i] = getReflectClassMethods[i].getName();
-        } */
-        String[] publicStaticMethods = resultList.toArray(new String[resultList.size()]);//???
-        Arrays.sort(publicStaticMethods);
+        String[] publicStaticMethods = resultList.toArray(new String[0]);
         // --end-->
-
+        Arrays.sort(publicStaticMethods);
         final String[] expected = {
             "compare", "doubleToLongBits", "doubleToRawLongBits", "hashCode",
             "isFinite", "isInfinite", "isNaN", "longBitsToDouble", "max",
@@ -97,7 +91,7 @@ class ReflectionTest {
         // TODO: please get the value of `getTitle` method using reflection. No casting to Employee is allowed.
         // <--start
         //System.out.print(employee.getClass().toString());
-        Object result = employee.getClass().getDeclaredMethod("getTitle", new Class[]{}).invoke(employee);
+        Object result = employee.getClass().getDeclaredMethod("getTitle").invoke(employee);
         // --end-->
 
         assertEquals("Employee", result);
@@ -119,27 +113,30 @@ class ReflectionTest {
     @SuppressWarnings({"ConstantConditions", "unused"})
     @Test
     void should_be_able_to_get_the_methods_who_contains_MyAnnotation_annotation() {
-        Class<MethodWithAnnotation> theClass = MethodWithAnnotation.class;
-
         // TODO: please get the methods who contains MyAnnotation annotation.
-        // <--start
-        Method[] methods = theClass.getMethods();
-        //Annotation[] annotations = theClass.getAnnotations();
-        List<String> myAnnotations = new ArrayList<>();
+        Class<MethodWithAnnotation> findAnnotation = MethodWithAnnotation.class;
+
+        Method[] methods = findAnnotation.getDeclaredMethods();
+        List<String> resultList = new ArrayList<>();
         for (Method method : methods) {
             Annotation[] annotations = method.getDeclaredAnnotations();
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType() == MyAnnotation.class) {
-                    myAnnotations.add(method.getName());
+                    resultList.add(method.getName());
                 }
             }
         }
-        String[] methodsContainsAnnotations = myAnnotations.toArray(new String[0]);
-        // --end-->
-
-        assertArrayEquals(new String[] {"theMethod"}, methodsContainsAnnotations);
+        String[] actualResult = resultList.toArray(new String[0]);
+        assertArrayEquals(new String[]{"theMethod"}, actualResult);
+    }
+    @Test
+    void should_child_array_not_parent_array_subclass() {
+        String[] s = new String[2];
+        Object[] o = new Object[2];
+        assertEquals(s.getClass().getSuperclass(), o.getClass());
     }
 }
+
 
 /*
  * - What is the class name of array type?

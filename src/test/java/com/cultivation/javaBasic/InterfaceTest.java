@@ -10,23 +10,23 @@ class InterfaceTest {
 
     @Test
     void should_support_default_method() {
-        InterfaceWithDefaultMethodImpl instance = new InterfaceWithDefaultMethodImpl();
+        InterfaceWithDefaultMethodImpl instance = new InterfaceWithDefaultMethodImpl();//?? why interface contains concrete methods
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "The truth of the universe is 42";
         // --end-->
 
         assertEquals(expected, instance.tellMeTheTruthOfTheUniverse());
     }
 
     @Test
-    void should_choose_override_method() {
+    void should_choose_override_method() {//why interface here the same as inheritance, just implements not extends
         InterfaceWithOverrideDefaultImpl instance = new InterfaceWithOverrideDefaultImpl();
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "The truth of the universe is Anime";
         // --end-->
 
         assertEquals(expected, instance.tellMeTheTruthOfTheUniverse());
@@ -38,7 +38,7 @@ class InterfaceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = null;
+        final String expected = "The truth of the universe is Game";
         // --end-->
 
         assertEquals(expected, instance.tellMeTheTruthOfTheUniverse());
