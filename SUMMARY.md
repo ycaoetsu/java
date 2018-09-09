@@ -371,6 +371,8 @@ method(Object… args) {} 可变长度参数 var length parameter
 * Integer.MAX_VALUE + 1 = Integer.MIN_VALUE 反之min-1=max
 * 子类数组和父类数组不是父子关系，没有任何关系
 * CodePoint 是字符串中物理意义上的一个字符，codepoint在目前Java（UTF-16 编码）中由一个或两个char组成
+
+
 ##shortcuts
 
 * 编译选择的文件、包或模块 command+shift+f9
