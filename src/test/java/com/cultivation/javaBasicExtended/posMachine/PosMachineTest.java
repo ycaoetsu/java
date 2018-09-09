@@ -135,6 +135,7 @@ class PosMachineTest {
             "    {\"id\": \"0009\", \"name\" : \"Diet Dr Pepper\", \"price\": 11},\n" +
             "    {\"id\": \"0010\", \"name\" : \"Fanta\", \"price\": 12}\n" +
             "]";
+//        System.out.print(sampleDatabase);
         return new StringReader(sampleDatabase);
     }
 }
