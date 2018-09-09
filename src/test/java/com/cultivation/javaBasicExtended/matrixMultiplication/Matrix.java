@@ -16,15 +16,52 @@ class Matrix {
     public Matrix(int[][] matrixArray) {
         // TODO: please implement the constructor of a matrix.
         // <--start
-        throw new NotImplementedException();
+        storage = matrixArray;
+        if (storage == null) {
+            throw new IllegalArgumentException("Raw matrix is null");
+        }
+        if (this.rows() == 0) {
+            throw new IllegalArgumentException("Raw matrix contains 0 row");
+        }
+        for (int rowNum = 0; rowNum < this.rows(); rowNum++) {
+            if (storage[rowNum] == null) {
+                throw new IllegalArgumentException("Raw matrix contains null row");
+            }
+            if (storage[rowNum].length == 0) {
+                throw new IllegalArgumentException("At least one row of raw matrix contains 0 column");
+            }
+            if (storage[rowNum].length != this.columns()) {
+                throw new IllegalArgumentException("Raw matrix is not rectangle");
+            }
+        }
         // --end-->
     }
 
-    public static Matrix multiply(Matrix left, Matrix right) {
+    public static Matrix multiply(Matrix left, Matrix right) {//M1{3 * 5} M2{5 * 2}
         // TODO: please implement the method to pass the tests.
         // <--start
-        throw new NotImplementedException();
+        if (left == null || right == null) {
+            throw new IllegalArgumentException();
+        }
+        if (left.columns() != right.rows()) {
+            throw new IllegalArgumentException();
+        }
+        Matrix resultMatrix = new Matrix(new int[left.rows()][right.columns()]);
+
+        //try {
+            for (int i = 0; i < left.rows(); i++) {
+                for (int j = 0; j < right.columns(); j++) {
+                    for (int k = 0; k < left.columns(); k++) {
+                        resultMatrix.storage[i][j] += left.storage[i][k] * right.storage[k][j];
+                    }
+                }
+            }
+            return resultMatrix;
+        //} catch (IllegalArgumentException error) {
+          //  throw new IllegalArgumentException();
+        //}
         // --end-->
+        //throw new NotImplementedException();
     }
 
     // TODO: you can add some helper method if you like.

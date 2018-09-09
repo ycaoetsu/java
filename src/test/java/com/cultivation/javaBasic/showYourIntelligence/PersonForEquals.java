@@ -2,10 +2,14 @@ package com.cultivation.javaBasic.showYourIntelligence;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
+
+
 @SuppressWarnings("unused")
-public class PersonForEquals {
+public class PersonForEquals implements Comparable<PersonForEquals>{
     private final String name;
     private final short yearOfBirth;
 
@@ -58,4 +62,30 @@ public class PersonForEquals {
         //throw new NotImplementedException();
         // --end-->
     }
+
+    public void rankPerson (PersonForEquals[] persons) {
+        Arrays.sort(persons, new Comparator<PersonForEquals>() {
+            @Override
+            public int compare(PersonForEquals o1, PersonForEquals o2) {
+                if (o1.getName().equals(o2.getName())) {
+                    return o1.yearOfBirth - o2.yearOfBirth;
+                }
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+    }
+
+    @Override
+    public int compareTo(PersonForEquals o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
+        int nameCompare = this.name.compareTo(o.name);
+        if (nameCompare != 0) {
+            return nameCompare;
+        }
+        if (this.yearOfBirth == o.yearOfBirth) return 0;
+        return this.yearOfBirth - o.yearOfBirth > 0 ? 1 : -1;
+    }
 }
+

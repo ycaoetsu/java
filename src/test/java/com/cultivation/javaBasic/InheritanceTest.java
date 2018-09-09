@@ -242,6 +242,18 @@ class InheritanceTest {
         assertNotEquals(person.hashCode(), different2.hashCode());
         assertEquals(person.hashCode(), samePerson.hashCode());
     }
+
+    @Test
+    void should_have_right_ranking() {
+        PersonForEquals person1 = new PersonForEquals("Alice", (short) 1990);
+        PersonForEquals person2 = new PersonForEquals("James", (short) 1992);
+        PersonForEquals person3 = new PersonForEquals("James", (short) 1990);
+//        PersonForEquals[] result;
+
+//        assertTrue(new PersonForEquals[]{new PersonForEquals("Alice", (short)1990)}.equals(result[0]));
+//        assertTrue(new PersonForEquals[]{new PersonForEquals("James", (short)1990)}.equals(result[1]));
+//        assertTrue(new PersonForEquals[]{new PersonForEquals("James", (short)1992)}.equals(result[2]));
+    }
 }
 
 /*

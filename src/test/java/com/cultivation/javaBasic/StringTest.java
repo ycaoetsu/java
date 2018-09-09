@@ -278,12 +278,13 @@ class StringTest {
         // TODO: please implement the method to the pass the test
         // <--start
         //codePointAt charAt
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < withSurrogatePairs.length(); i++) {
-            list.add(Character.codePointAt(withSurrogatePairs, i));
-        }
-        return withSurrogatePairs.codePoints().toArray();
+        int[] result = new int[withSurrogatePairs.codePointCount(0, withSurrogatePairs.length())];
+            int codeIndex = 0;
+        for (int charIndex = 0; charIndex < withSurrogatePairs.length(); charIndex++) {
+            charIndex += Character.charCount(withSurrogatePairs.codePointAt(codeIndex));
 
+        }
+        throw new NotImplementedException();
         //new String(Character.toChars(0x20B9F)) + " is funny";
         /*List<Integer> list = new ArrayList<>();
         for(int i = 0; i < withSurrogatePairs.length(); i++){

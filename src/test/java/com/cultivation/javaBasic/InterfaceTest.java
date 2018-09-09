@@ -21,7 +21,7 @@ class InterfaceTest {
     }
 
     @Test
-    void should_choose_override_method() {//why interface here the same as inheritance, just implements not extends
+    void should_choose_override_method() {
         InterfaceWithOverrideDefaultImpl instance = new InterfaceWithOverrideDefaultImpl();
 
         // TODO: please modify the following code to pass the test
