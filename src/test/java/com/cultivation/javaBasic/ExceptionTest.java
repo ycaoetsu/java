@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExceptionTest {
     @Test
@@ -22,6 +20,7 @@ class ExceptionTest {
             throw new StringFormatException("the message");
         } catch (StringFormatException error) {
             assertEquals("the message", error.getMessage());
+            assertEquals(null, error.getCause());
         }
     }
 
@@ -43,7 +42,7 @@ class ExceptionTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final int expectedResult = Integer.MAX_VALUE;
+        final int expectedResult = 0;
         // --end-->
 
         assertEquals(expectedResult, confusedResult);
@@ -60,7 +59,7 @@ class ExceptionTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final Optional<Boolean> expected = Optional.empty();
+        final Optional<Boolean> expected = Optional.of(true);
         // --end-->
 
         assertEquals(expected.get(), closableStateReference.isClosed());
@@ -73,15 +72,15 @@ class ExceptionTest {
 
         try {
             try (AutoCloseable withoutThrow = new ClosableWithoutException(logger);
-                 AutoCloseable withThrow = new ClosableWithException(logger)) {
-            }
+                 AutoCloseable withThrow = new ClosableWithException(logger)) {//如果是null withThrow = null; 不会去close
+            }//所有resource都必须关闭 sql 文件流，用try尝试连资源  try with resource 或者finally 来关闭资源
         } catch (Exception e) {
             // It is okay!
         }
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {};
+        final String[] expected = {"ClosableWithException.close", "ClosableWithoutException.close"};
         // --end-->
 
         assertArrayEquals(
@@ -92,7 +91,6 @@ class ExceptionTest {
     @Test
     void should_get_method_name_in_stack_frame() {
         String methodName = StackFrameHelper.getCurrentMethodName();
-
         assertEquals(
             "com.cultivation.javaBasic.ExceptionTest.should_get_method_name_in_stack_frame",
             methodName);
@@ -101,13 +99,18 @@ class ExceptionTest {
     @SuppressWarnings({"ReturnInsideFinallyBlock", "SameParameterValue"})
     private int confuse(int value) {
         try {
-            return value * value;
+            return value * value;//还是在作用域内finally一定会被执行
         } finally {
             if (value == 2) {
                 return 0;
             }
         }
     }
+
+//    @Test
+//    private void testSigniture() throws Error {
+//
+//    }
 }
 
 /*

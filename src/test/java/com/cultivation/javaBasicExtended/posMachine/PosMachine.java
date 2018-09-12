@@ -1,18 +1,18 @@
 package com.cultivation.javaBasicExtended.posMachine;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings({"WeakerAccess", "unused", "RedundantThrows"})
 public class PosMachine {
 
-    Set<Product> productSet = new HashSet<>();
+    private Set<Product> productList = new HashSet<>();
 
     public void readDataSource(Reader reader) throws IOException {
         // TODO: please implement the following method to pass the test
@@ -24,28 +24,49 @@ public class PosMachine {
             sb.append((char)data);
             data = reader.read();
         }
-        String[] products = sb.toString().split("\n");
-        for (int i = 1; i < products.length - 1; i++) {
-            String cur = products[i];
-            Product product = new Product();
-            for (int j = 0; j < cur.length(); j++) {
-
-            }
-        }
-        System.out.print(products[1]);
-        throw new NotImplementedException();
+        String resultString = sb.toString();
+        ObjectMapper mapper = new ObjectMapper();//create once, reuse
+        productList = mapper.readValue(resultString, new TypeReference<Set<Product>>() {
+        });
+//        for (Product product : productList) {
+//            System.out.print(product.getName());
+//            System.out.println(product.getPrice());
+//        }
         // --end-->
     }
 
     public String printReceipt(String barcodeContent) throws IOException {
         // TODO: please implement the following method to pass the test
         // <--start
+        String line = System.lineSeparator();
+        String receiptHeader = "Receipts" + line;
+        String receiptSeparateLine = "------------------------------------------------------------" + line;
+        String receiptPricePart = "Price: %d" + line;
+        String receiptBodyFormat = "%-32s%-11d%d" + line;
         if (barcodeContent == null || barcodeContent == "[]") {
-            return "Receipts" + '\n' +
-                    "------------------------------------------------------------" + '\n' +
-                    "------------------------------------------------------------" + '\n' +
-                    "Price: 0" + '\n';
+            return receiptHeader + receiptSeparateLine + receiptSeparateLine + String.format(receiptPricePart, 0);
         }
+        StringBuilder sb = new StringBuilder();
+        List<String> barcodes = new ObjectMapper().readValue(barcodeContent, new TypeReference<List<String>>(){});
+        Map<Product, Integer> map = new LinkedHashMap<>();
+        int sum = 0;
+        for (String barcode : barcodes) {
+            int quantity = 1;
+            for (Product product : productList) {
+                if (product.getId().equals(barcode)) {
+                    if (map.containsKey(product)) {
+                        quantity = map.get(product) + 1;
+                    }
+                    map.put(product, quantity);
+                }
+            }
+        }
+        StringBuilder receiptBody = new StringBuilder();
+
+//        for (Map.Entry<Product, Integer> entry : map.entrySet()) {
+//            receiptBody
+//        }
+//        String receiptStr = (sb.toString() + "Price:%d" + '\n', sum);
         throw new NotImplementedException();
         // --end-->
     }
@@ -67,18 +88,6 @@ class Product {
 
     public Integer getPrice() {
         return price;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     @Override

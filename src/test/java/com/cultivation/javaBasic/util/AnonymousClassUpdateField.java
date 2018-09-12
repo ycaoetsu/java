@@ -1,6 +1,6 @@
 package com.cultivation.javaBasic.util;
 
-public class AnonymousClassUpdateField {
+public class AnonymousClassUpdateField{
     private int year;
 
     public AnonymousClassUpdateField() {

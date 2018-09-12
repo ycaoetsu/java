@@ -110,7 +110,6 @@ class PosMachineTest {
     void should_throw_if_data_source_is_not_set() throws IOException {
         PosMachine posMachine = new PosMachine();
         final String barcode = createBarCodes("0001", "0003", "0005", "0003");
-
         assertThrows(IllegalStateException.class, () -> posMachine.printReceipt(barcode));
     }
 

@@ -8,7 +8,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CollectionsTest {
     @Test
@@ -29,7 +31,9 @@ class CollectionsTest {
         // TODO: you could ONLY use `Iterator.hasNext` and `Iterator.next` API to copy items to a `List`. No `for` is
         // allowed.
         // <--start
-
+        while(iterator.hasNext()) {
+            list.add(iterator.next());
+        }
         // --end-->
 
         return list;
@@ -42,7 +46,7 @@ class CollectionsTest {
     }
 
     @Test
-    void should_predict_linked_list_operation_result() {
+    void should_predict_linked_list_operation_result() {//?
         LinkedList<String> staff = new LinkedList<>();
 
         staff.add("Amy");
@@ -54,10 +58,11 @@ class CollectionsTest {
         iterator.add("Juliet");
         iterator.previous();
         iterator.remove();
-
+//        iterator.remove();
+        assertTrue(iterator.next().equals("Bob"));
         // TODO: please modify the following code to pass the test
         // <--start
-        final List<String> expected = Arrays.asList("I", "Don't", "Know");
+        final List<String> expected = Arrays.asList("Amy", "Bob", "Carl");
         // --end-->
 
         assertIterableEquals(expected, staff);
@@ -68,8 +73,8 @@ class CollectionsTest {
         // NOTE: This test may execute for a while. But it is okay if your impl is correct.
         final int oneGagaChars = 1024 * 1024 * 1024;
         RandomCharacterIterable characters = new RandomCharacterIterable(
-            oneGagaChars,
-            new Character[]{'a', 'b'});
+            oneGagaChars,//size
+            new Character[]{'a', 'b'});//Character[]
 
         List<Character> distinct = new DistinctIterable<>(characters).toList();
         distinct.sort(Character::compareTo);
@@ -81,27 +86,48 @@ class CollectionsTest {
     void should_reflects_back_to_original_list_for_sub_range() {
         List<Integer> integers = new ArrayList<>();
         for (int i = 0; i < 12; ++i) {
-            integers.add(i);
+            integers.add(i); //from 0 to 11 // 0 1 2
         }
 
-        List<Integer> subList = integers.subList(3, 10);
+        List<Integer> subList = integers.subList(3, 10);//左闭右开
         subList.clear();
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final List<Integer> expected = Arrays.asList(0, 0, 0);
+        final List<Integer> expected = Arrays.asList(0, 1, 2, 10, 11);
         // --end-->
 
         assertIterableEquals(expected, integers);
     }
+
+    @Test //integer = a ++
+    void should_not_modify_integer_by_add_1() {
+        Integer integer = 3;
+        integer = integer++;
+//        Integer anotherInteger = 3;
+//        int anotherIntegerModify = anotherInteger++;
+        assertTrue(integer.equals(3));
+//        assertTrue(4 == anotherIntegerModify);
+    }
+
+//    @Test
+//    void should_be_fifteen_yottabyte() {
+//        List<Double> result = getYottaByte();
+//        assertEquals(15, result.size());
+//    }
+//    public List<Double> getYottaByte() {
+
+//    }
 }
+
 
 /*
  * - Can you expect the order returned when iterating over a `HashSet<T>`?
- * - What is an `ArrayList`, `LinkedList`, `ArrayDeque`, `HashSet`, `HashSet`, `TreeSet`, `EnumSet`, `LinkedHashSet`,
+ * - What is an `ArrayList`, `LinkedList`, `ArrayDeque`, `HashSet`, `TreeSet`, `EnumSet`, `LinkedHashSet`,
  *   `PriorityQueue`, `HashMap`, `TreeMap`, `EnumMap`, `LinkedHashMap`
  * - What if an collection is modified while an iterator is still iterating?
  * - Can you add or remove items to the list that is returned by `Array.asList` or `Collections.nCopies`?
  * - What are the differences between HashMap and HashSet?
  * - What is size(), and what capacity?
  */
+//ArrayDeque doubly queue

@@ -28,6 +28,8 @@ class DistinctIterator<E> implements Iterator<E> {
     // <--start
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final Iterator<E> iterator;
+    Set<E> objects = new HashSet<>();
+    E current = null;
 
     DistinctIterator(Iterator<E> iterator) {
         this.iterator = iterator;
@@ -35,12 +37,21 @@ class DistinctIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        throw new NotImplementedException();
+        while (iterator.hasNext()) {
+            E e = iterator.next();
+            if (objects.add(e)) {
+                current = e;
+                return true;
+            }
+        }
+        return false;
+//        throw new NotImplementedException();
     }
 
     @Override
     public E next() {
-        throw new NotImplementedException();
+        return current;
+//        throw new NotImplementedException();
     }
     // --end->
 }

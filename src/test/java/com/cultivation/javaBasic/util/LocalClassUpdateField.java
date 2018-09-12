@@ -2,7 +2,6 @@ package com.cultivation.javaBasic.util;
 
 public class LocalClassUpdateField {
     private int year;
-
     public LocalClassUpdateField() {
         year = 2018;
     }
@@ -12,10 +11,12 @@ public class LocalClassUpdateField {
     }
 
     public void somethingHappen() {
+        //int year = 3;
         class YearIncrementer {
+            private int year = 3;
             @SuppressWarnings("WeakerAccess")
             public void increment() {
-                ++year;
+                ++this.year;
             }
         }
 
